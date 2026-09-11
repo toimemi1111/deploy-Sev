@@ -1,0 +1,50 @@
+cat > /opt/microsoft_auth_bot/.gitignore << 'EOF'
+# Credentials & secrets
+.env
+*.env
+credentials.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Logs
+*.log
+*.log.*
+
+# Output files
+validated_credentials.json
+password_report.json
+session.json
+
+# Uploads
+uploads/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.yml
+Dockerfile
+
+# System
+/etc/systemd/system/microsoft-auth-*.service
+/etc/logrotate.d/microsoft_auth_bot
+EOF
