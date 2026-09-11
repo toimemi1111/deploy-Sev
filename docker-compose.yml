@@ -1,0 +1,40 @@
+cat > /opt/microsoft_auth_bot/docker-compose.yml << 'COMPEOF'
+version: '3.8'
+services:
+  bot:
+    build: .
+    container_name: microsoft-auth-bot
+    restart: always
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - MS_TENANT_ID=${MS_TENANT_ID}
+      - MS_CLIENT_ID=${MS_CLIENT_ID}
+      - MS_CLIENT_SECRET=${MS_CLIENT_SECRET}
+      - MS_SCOPE=${MS_SCOPE}
+      - IMAP_SERVER=${IMAP_SERVER}
+      - IMAP_PORT=${IMAP_PORT}
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    ports:
+      - "8080:8080"
+    command: python bot.py
+  orchestrator:
+    build: .
+    container_name: microsoft-auth-orchestrator
+    restart: always
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - MS_TENANT_ID=${MS_TENANT_ID}
+      - MS_CLIENT_ID=${MS_CLIENT_ID}
+      - MS_CLIENT_SECRET=${MS_CLIENT_SECRET}
+      - MS_SCOPE=${MS_SCOPE}
+      - IMAP_SERVER=${IMAP_SERVER}
+      - IMAP_PORT=${IMAP_PORT}
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    command: python main.py
+    depends_on:
+      - bot
+COMPEOF
